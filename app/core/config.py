@@ -7,6 +7,9 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Complejidad App API"
     API_V1_PREFIX: str = "/api/v1"
 
+    # Ruta al dataset de edgelist usado por el analisis de grafo de seguidores.
+    FOLLOWERS_DATASET_PATH: str = "data/tiktok_combined.txt"
+
     # Origenes permitidos para CORS, separados por coma en la variable de entorno.
     BACKEND_CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
 
