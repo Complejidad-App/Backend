@@ -3,6 +3,7 @@ from pathlib import Path
 import networkx as nx
 
 from app.schemas.graph import GraphAnalysisResponse, GraphEdge, GraphNode, GraphStats
+from app.services.graph_utils import load_graph, top_in_degree_subgraph
 
 
 def analyze_followers_graph(
@@ -20,14 +21,8 @@ def analyze_followers_graph(
 
     Lanza FileNotFoundError si el dataset no existe; el endpoint lo traduce a 404.
     """
-    path = Path(dataset_path)
-    if not path.exists():
-        raise FileNotFoundError(str(path))
-
-    graph = nx.read_edgelist(path, create_using=nx.DiGraph())
-
-    top_nodes = sorted(graph.in_degree, key=lambda item: item[1], reverse=True)[:top_n]
-    subgraph = graph.subgraph([node for node, _ in top_nodes]).copy()
+    graph = load_graph(dataset_path)
+    subgraph = top_in_degree_subgraph(graph, top_n)
 
     in_degrees = dict(subgraph.in_degree())
     out_degrees = dict(subgraph.out_degree())
