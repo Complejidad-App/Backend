@@ -15,8 +15,7 @@ def max_flow(
 ) -> MaxFlowResponse:
     """Flujo maximo de audiencia garantizada entre un creador (origen) y un nicho.
 
-    Devuelve el valor del flujo y el subgrafo (nodos + aristas con capacidad y
-    flujo) en JSON para que el frontend resalte las rutas activas.
+    Estima la audiencia máxima garantizada que un creador puede mover hacia un nicho objetivo, permitiendo comparar candidatos y elegir la inversión publicitaria con mejor retorno.
     """
     try:
         return compute_max_flow(settings.FOLLOWERS_DATASET_PATH, top_n, source, target)

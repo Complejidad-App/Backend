@@ -9,17 +9,21 @@ router = APIRouter(prefix="/graph", tags=["graph"])
 
 @router.get("/followers", response_model=GraphAnalysisResponse)
 def followers_graph(
-    top_n: int = Query(60, ge=1, le=500, description="Cantidad de nodos top por in-degree"),
-    threshold: int = Query(14, ge=0, description="Umbral de in-degree para considerar un hub"),
+    top_n: int = Query(
+        60, ge=1, le=500, description="Cantidad de nodos top por in-degree"
+    ),
+    threshold: int = Query(
+        14, ge=0, description="Umbral de in-degree para considerar un hub"
+    ),
 ) -> GraphAnalysisResponse:
     """Analisis del grafo de seguidores (top-N por influencia) en formato JSON.
 
-    Lee el edgelist configurado en `FOLLOWERS_DATASET_PATH` y devuelve los nodos
-    con sus metricas, las aristas relevantes y un resumen, para que el frontend
-    dibuje la red.
+    identifica a los creadores más influyentes (hubs) de la red para priorizar con quién hacer alianzas o campañas y maximizar el alcance orgánico.
     """
     try:
-        return analyze_followers_graph(settings.FOLLOWERS_DATASET_PATH, top_n, threshold)
+        return analyze_followers_graph(
+            settings.FOLLOWERS_DATASET_PATH, top_n, threshold
+        )
     except FileNotFoundError as exc:
         raise HTTPException(
             status_code=404,
