@@ -29,5 +29,5 @@ htmlcov/
 # OS
 .DS_Store
 
-# Data (descomenta si no quieres versionar datasets grandes)
-# data/
+# Datasets grandes (la carpeta data/ se mantiene via README.md)
+data/*.txt
